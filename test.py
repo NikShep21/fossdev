@@ -13,7 +13,17 @@ def test_devide():
     result = 2
     assert devide(a, b) == result
 
+def test_deivision_prohibited():
+    try:
+        devide("A", "B")
+        print("Test string division failed")
+        assert False
+    except ValueError as e:
+        print("Test string division passed")
+
 if __name__ == "__main__":
     test_sum()
     test_devide()
+    test_deivision_prohibited()
     print("All tests passed")
+
