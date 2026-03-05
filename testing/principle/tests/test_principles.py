@@ -1,6 +1,6 @@
 import sys
 
-from math_demo import add, add_with_bug
+from math_demo import add, add_with_bug, calculate_tax_bugged, calculate_tax
 
 def test_addition():
     assert add(2, 2) == 4
@@ -43,12 +43,32 @@ def test_addition_commutativity():
     assert add(7, -3) == 4
     print("Addition commutativity test passed.")
 
+def test_tax_calculator_bugged():
+    assert calculate_tax_bugged(1000) == 150
+    assert calculate_tax_bugged(100) == 15
+    assert calculate_tax_bugged(10) == 1.5
+    assert calculate_tax_bugged(1) == 0.15 
+    assert calculate_tax_bugged(0) == 0
+    assert calculate_tax_bugged(234) == 35.1
+    print("Tax calculator test passed.")
+
+def test_tax_calculator():
+    assert calculate_tax(1000) == 150
+    assert calculate_tax(100) == 15
+    assert calculate_tax(10) == 1.5
+    assert calculate_tax(1) == 0.15 
+    assert calculate_tax(0) == 0
+    assert calculate_tax(234) == 35.1
+    print("Tax calculator test passed.")
+
 if __name__ == "__main__":
     test_addition()
-    test_addition_with_bug()
+    # test_addition_with_bug()
     test_addition_duplicate()
     # test_addition_overkill()
     test_addition_clussters()
     test_addition_commutativity()
+    test_tax_calculator()
+    test_tax_calculator_bugged()
 
     
