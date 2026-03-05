@@ -36,7 +36,12 @@ def test_addition_clussters():
     assert add(5, 0) == 5
     print("Addition clusters test passed.")
 
-
+def test_addition_commutativity():
+    assert add(5, 10) == 15
+    assert add(10, 5) == 15
+    assert add(-3, 7) == 4
+    assert add(7, -3) == 4
+    print("Addition commutativity test passed.")
 
 if __name__ == "__main__":
     test_addition()
@@ -44,5 +49,6 @@ if __name__ == "__main__":
     test_addition_duplicate()
     # test_addition_overkill()
     test_addition_clussters()
+    test_addition_commutativity()
 
     
