@@ -2,21 +2,21 @@
 
 create-practice:
 ifndef PRACTICE
-  $(error must pass val via PRACTICE)
+$(error must pass val via PRACTICE)
 endif
-  @echo "creating practice"
-  mkdir -p $(PRACTICE)
-  cp PracticeMakefile $(PRACTICE)/Makefile
+	@echo "creating practice"
+	mkdir -p $(PRACTICE)
+	cp PracticeMakefile $(PRACTICE)/Makefile
 
 remove-practice:
 ifndef PRACTICE
-  $(error must pass val via PRACTICE)
+$(error must pass val via PRACTICE)
 endif
-  @echo "removing practice"
-  rm -rf $(PRACTICE)
+	@echo "removing practice"
+	rm -rf $(PRACTICE)
 
 help:
-  @echo "This makefile for repo-level activity"
+	@echo "This makefile for repo-level activity"
 
 
 # mkdir demo-practice
