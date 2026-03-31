@@ -4,3 +4,4 @@ fastapi
 pytest
 mypy
 ruff
+types-requests
