@@ -1,14 +1,22 @@
 .DEFAULT_GOAL := create-structure
+
+ifeq ($(OS),Windows_NT)
+	PYTHON := python
+else
+	PYTHON := python3
+endif
+
 create-structure:
-	mkdir src tests docs
+	mkdir -p src tests docs
 	touch README.md setup.py requirements.txt
 	touch docs/DOMAIN.md
 	touch src/.gitkeep tests/.gitkeep
 
 install-dep:
-	pip install -r requirements.txt
+	$(PYTHON) -m pip install -r requirements.txt
 
 install:
-	pip install -e .
+	$(PYTHON) -m pip install -e .
+
 test-pytest:
-	python3 -m pytest
+	$(PYTHON) -m pytest
