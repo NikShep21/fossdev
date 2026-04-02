@@ -31,6 +31,14 @@ def _parse_record(line: str) -> dict | None:
 
 
 def read_data(path):
+    """Parsing information for one sale
+    Parameters:
+        line - string that contain sale record in form of comma-separated values
+    Returns:
+        dict - sale information on Form of dict
+    Raises:
+
+    """
     res = []  # final list
     with open(path, "r", encoding="utf-8") as f:  # open file
         for x in f:  # go over lines
