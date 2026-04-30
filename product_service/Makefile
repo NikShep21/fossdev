@@ -1,22 +1,20 @@
-.DEFAULT_GOAL := create-structure
+APP = src.main:app
+HOST = 127.0.0.1
+PORT = 8001
 
-ifeq ($(OS),Windows_NT)
-	PYTHON := python
-else
-	PYTHON := python3
-endif
-
-create-structure:
-	mkdir -p src tests docs
-	touch README.md setup.py requirements.txt
-	touch docs/DOMAIN.md
-	touch src/.gitkeep tests/.gitkeep
-
-install-dep:
-	$(PYTHON) -m pip install -r requirements.txt
+.PHONY: install dev run test health
 
 install:
-	$(PYTHON) -m pip install -e .
+	poetry install
 
-test-pytest:
-	$(PYTHON) -m pytest
+dev:
+	poetry run uvicorn $(APP) --reload --host $(HOST) --port $(PORT)
+
+run:
+	poetry run uvicorn $(APP) --host $(HOST) --port $(PORT)
+
+test:
+	poetry run pytest
+
+health:
+	curl http://$(HOST):$(PORT)/health
