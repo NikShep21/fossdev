@@ -1,20 +1,22 @@
-APP = src.main:app
-HOST = 127.0.0.1
-PORT = 8000
+APP = app.main:app
+APP_DIR = src
+HOST ?= 127.0.0.1
+PORT ?= 8000
 
-.PHONY: install dev run test health
+PRODUCT_HOST ?= 127.0.0.1
+PRODUCT_PORT ?= 8001
+PRODUCT_SERVICE_URL ?= http://$(PRODUCT_HOST):$(PRODUCT_PORT)
+
+.PHONY: install dev run health
 
 install:
 	poetry install
 
 dev:
-	poetry run uvicorn $(APP) --reload --host $(HOST) --port $(PORT)
+	PRODUCT_SERVICE_URL=$(PRODUCT_SERVICE_URL) poetry run uvicorn $(APP) --app-dir $(APP_DIR) --reload --host $(HOST) --port $(PORT)
 
 run:
-	poetry run uvicorn $(APP) --host $(HOST) --port $(PORT)
-
-test:
-	poetry run pytest
+	PRODUCT_SERVICE_URL=$(PRODUCT_SERVICE_URL) poetry run uvicorn $(APP) --app-dir $(APP_DIR) --host $(HOST) --port $(PORT)
 
 health:
 	curl http://$(HOST):$(PORT)/health
