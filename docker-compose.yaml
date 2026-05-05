@@ -11,10 +11,15 @@ services:
     ports:
       - "8002:8000"
     environment:
-      - PRODUCT_SERVICE_URL=http://product_service:8000
+      PRODUCT_SERVICE_URL: http://product_service:8000
+      DATABASE_URL: postgresql://app:app@db:5432/orders
 
     depends_on:
-      - product_service
+      product_service:
+        condition: service_started
+      db:
+        condition: service_healthy
+
     networks:
       - service-net
   db:
@@ -32,6 +37,8 @@ services:
       interval: 1m30s
       timeout: 30s
       retries: 5
+    networks:
+      - service-net
 
 networks:
   service-net:
