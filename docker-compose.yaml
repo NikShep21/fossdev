@@ -1,11 +1,11 @@
 services:
   product_service:
     build: ./product_service
-
     ports:
       - "8001:8000"
     networks:
       - service-net
+
   order_service:
     build: ./order_service
     ports:
@@ -13,29 +13,28 @@ services:
     environment:
       PRODUCT_SERVICE_URL: http://product_service:8000
       DATABASE_URL: postgresql://app:app@db:5432/orders
-
     depends_on:
       product_service:
         condition: service_started
       db:
         condition: service_healthy
-
     networks:
       - service-net
+
   db:
     image: postgres:16
     environment:
-      - POSTGRES_USER=app
-      - POSTGRES_PASSWORD=app
-      - POSTGRES_DB=orders
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: orders
     ports:
       - "5432:5432"
     volumes:
       - order-db-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -u app -d orders"]
-      interval: 1m30s
-      timeout: 30s
+      test: ["CMD-SHELL", "pg_isready -U app -d orders"]
+      interval: 10s
+      timeout: 5s
       retries: 5
     networks:
       - service-net
@@ -46,5 +45,6 @@ networks:
     ipam:
       config:
         - subnet: 172.28.10.0/24
+
 volumes:
   order-db-data:
